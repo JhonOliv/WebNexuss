@@ -25,13 +25,13 @@ function Login() {
     const [pass, setPass] = useState();
 
     function singUpPainel() {
-        
+
         signInWithEmailAndPassword(auth, email, pass)
             .then((userCredential) => {
                 // Login bem-sucedido
                 const user = userCredential.user;
                 console.log("Usuário autenticado:", user.email);
-                navigate("/painelBlog");
+                navigate("/");
 
             })
             .catch((error) => {
@@ -39,7 +39,7 @@ function Login() {
                 const errorCode = error.code;
                 const errorMessage = error.message;
                 console.error(`NumberError: ${errorCode} Erro: ${errorMessage} `);
-                
+
             });
 
     }
