@@ -31,7 +31,7 @@ function Login() {
                 // Login bem-sucedido
                 const user = userCredential.user;
                 console.log("Usuário autenticado:", user.email);
-                navigate("/");
+                navigate("/painel");
 
             })
             .catch((error) => {
@@ -51,7 +51,7 @@ function Login() {
                         <h1 className="display-5 fw-bold lh-1 text-body-emphasis mb-3">Acesso o Painel com sua conta Administrador</h1>
                     </div>
                     <div className="col-md-10 mx-auto col-lg-5">
-                        <form className="p-4 p-md-5 border rounded-3 bg-body-tertiary">
+                        <div className="p-4 p-md-5 border rounded-3 bg-body-tertiary">
                             <div className="form-floating mb-3">
                                 <input type="email" className="form-control" id="floatingInput" placeholder="name@example.com" onChange={(e) => {
                                     setEmail(e.target.value)
@@ -70,9 +70,9 @@ function Login() {
                                 </label>
                             </div>
                             <hr className="my-4" />
+                            <button className="w-100 btn btn-lg btn-primary" type="submit" onClick={singUpPainel}>Sign up</button>
                             <small className="text-body-secondary">By clicking Sign up, you agree to the terms of use.</small>
-                        </form>
-                        <button className="w-100 btn btn-lg btn-primary" type="submit" onClick={singUpPainel}>Sign up</button>
+                        </div>
                     </div>
                 </div>
             </div>

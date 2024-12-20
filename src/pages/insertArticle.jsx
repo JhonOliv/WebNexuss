@@ -99,7 +99,6 @@ export default function insertArticle(){
                             }} type="text" className='form-control' />
                         </div>
                         <div className='d-flex justify-content-end p-2'>
-                            <input type='button' className='btn btn-outline-danger' value="Delete Article" disabled />
                             <input type="button" className='btn btn-outline-success mx-2' onClick={saveArticle} value="Insert Article" />
                         </div>
                     </form>
