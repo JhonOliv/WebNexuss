@@ -3,15 +3,7 @@ import { getFirestore, collection, addDoc } from "firebase/firestore";
 import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import { useState } from 'react';
 
-const firebaseConfig = {
-    apiKey: "AIzaSyDYqdxP_5hbArrg_R4_g7Iz3WMnV9wjCBE",
-    authDomain: "webnexuss.firebaseapp.com",
-    projectId: "webnexuss",
-    storageBucket: "webnexuss.firebasestorage.app",
-    messagingSenderId: "628801567818",
-    appId: "1:628801567818:web:76df575b1a112146a6bab3",
-    measurementId: "G-GEBPX15CBN"
-};
+
 
 const app = initializeApp(firebaseConfig);
 const dataBase = getFirestore(app);
