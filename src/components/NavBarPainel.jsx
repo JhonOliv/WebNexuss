@@ -5,7 +5,7 @@ import Nav from 'react-bootstrap/Nav';
 
 function NavBarPainel({onNavClick, painelNavClick}) {
   return (
-    <nav className="bg-dark">
+   
       <Nav bg="dark" variant="tabs" defaultActiveKey="/painel">
         <Nav.Item>
           <Nav.Link onClick={painelNavClick} as={Link} to="/painel">Painel</Nav.Link>
@@ -23,7 +23,7 @@ function NavBarPainel({onNavClick, painelNavClick}) {
           <Nav.Link onClick={onNavClick} as={Link} to="/painel/createUser">New User</Nav.Link>
         </Nav.Item>
       </Nav>
-    </nav>
+   
 
   );
 }

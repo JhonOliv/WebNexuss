@@ -1,5 +1,4 @@
-import 'bootstrap/dist/css/bootstrap.css';
-
+import 'bootstrap/dist/css/bootstrap.css';  
 import NavBarPainel from '../components/NavBarPainel';
 import { Outlet } from 'react-router-dom';
 

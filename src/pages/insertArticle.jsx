@@ -1,5 +1,6 @@
 import { initializeApp } from "firebase/app";
 import { getFirestore, collection, addDoc } from "firebase/firestore";
+import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import { useState } from 'react';
 
 const firebaseConfig = {
@@ -15,7 +16,7 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const dataBase = getFirestore(app);
 
-export default function insertArticle(){
+export default function insertArticle() {
 
 
     const [getIdBlog, setIdBlog] = useState("");
@@ -23,39 +24,66 @@ export default function insertArticle(){
     const [getAssuntoBlog, setAssuntoBlog] = useState();
     const [getImgBlog, setImgBlog] = useState();
     const [getDescricaoBlog, setDescricaoBlog] = useState();
+    const [publicUrl, setPublicUrl] = useState();
+   
+    async function uploadImage(file) {
+        
+        const storege = getStorage(app);
+        const spaceRef = ref(storege, `images/${file[0].name}`);
+        
+        const metaData = {
+            contentType: file[0].type, // Define o tipo correto
+        };
+    
+        try {
+            // Faz o upload do arquivo com metadados
+            await uploadBytes(spaceRef, file[0], metaData);
+            console.log("Arquivo enviado com sucesso!");
+    
+            // Obtém a URL pública
+            const urlPublic = await getDownloadURL(spaceRef);
+            setPublicUrl(urlPublic)
+    
+    
+            return urlPublic; 
+        } catch (error) {
+            console.error("Erro durante o upload ou ao obter a URL:", error);
+            return null;
+        }
+    }
 
-
-    async function saveArticle(e) {
+     function saveArticle(e) {
         e.preventDefault();
 
+        const urlImg = uploadImage(getImgBlog);
         // Monta o objeto do artigo
-        const completeArticle = {
-            id: getIdBlog,
-            titulo: getTitleBlog,
-            assunto: getAssuntoBlog,
-            imagem: getImgBlog.name || "",
-            descricao: getDescricaoBlog,
-        };
-        // Adiciona o documento na coleção "articleBlog"
-
-        try {
-            // Referência à coleção "articleBlog"
-            const articleCollectionRef = collection(dataBase, "articleBlog");
-
-            // Adiciona o documento à coleção
-            const docRef = await addDoc(articleCollectionRef, completeArticle);
-
-            // Sucesso
-            console.log("Documento adicionado com sucesso! ID:", docRef.id);
-        } catch (error) {
-            // Erro
-            console.error("Erro ao adicionar documento:", error);
-        }
+         const completeArticle = {
+               id: getIdBlog,
+               titulo: getTitleBlog,
+               assunto: getAssuntoBlog,
+               imagem: publicUrl,
+               descricao: getDescricaoBlog,
+           };
+           // Adiciona o documento na coleção "articleBlog"
+         
+           try {
+               // Referência à coleção "articleBlog"
+               const articleCollectionRef = collection(dataBase, "articleBlog");
+   
+               // Adiciona o documento à coleção
+               const docRef = addDoc(articleCollectionRef, completeArticle);
+   
+               // Sucesso
+               console.log("Documento adicionado com sucesso! ID:", docRef.id);
+           } catch (error) {
+               // Erro
+               console.error("Erro ao adicionar documento:", error);
+           } 
 
 
     }
 
-    return(
+    return (
         <div className='container'>
             <div className='row d-flex justify-content-center'>
                 <div className='col-md-8'>
@@ -89,7 +117,7 @@ export default function insertArticle(){
                         <div className='my-4 p-2'>
                             <label className='form-label'>Selecionar imagem do Artigo</label>
                             <input onChange={e => {
-                                setImgBlog(e.target.files[0])
+                                setImgBlog(e.target.files)
                             }} type='file' className='form-control mt-1' />
                         </div>
                         <div className='my-4  p-2'>
